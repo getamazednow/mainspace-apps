@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--
+        Mainframe Cloud Pty Ltd MainSpace Example App - MainSpace User Guide Example #2.
+        For more information refer to Mainframe Cloud Resources www.mainframecloud.com and download the MainSpace Guide.
+-->
+<html>
+  <body>
+    <h2>MainSpace: DB2 SQL Example - List the Contents</h2>
+    <p id="sample"></p>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- JavaScript Code Section                                             -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <script>
+      document.getElementById("sample").innerHTML = 'Please wait...';
+
+      /*
+       * MainSpace API call.
+       * Perform an SQL query and call nominated user function when SQL query complete.
+       */
+      MFCAgentRequest.newObject( "obj1" );
+      obj1.callbackFunction = "callBack( obj1.response );";
+      obj1.setDB2SSID( "DBBG" );
+      obj1.runSQL( "SELECT * FROM DSN81110.EMP" );
+
+      /*
+       * User callback function.
+       * Display the full content of the JSON response in raw format.
+       */
+      function callBack( response ) {
+        var myJSON = JSON.stringify( response );
+        document.getElementById("sample").innerHTML = myJSON;
+      }
+
+    </script>
+  </body>
+</html>
