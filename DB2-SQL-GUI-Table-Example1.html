@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--
+        Mainframe Cloud Pty Ltd MainSpace Example App - MainSpace User Guide Example #6.
+        For more information refer to Mainframe Cloud Resources www.mainframecloud.com and download the MainSpace Guide.
+-->
+<html>
+  <head>
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- IMPORT THIRD PARTY GUI LIBRARIES.                               -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <link href="http://www.mainframecloudplatform.com/applibs/fgrid/fancy.min.css" rel="stylesheet">
+    <script type="text/javascript" src="http://www.mainframecloudplatform.com/applibs/fgrid/fancy.full.min.js"></script>
+  </head>
+  <body>
+    <h2>MainSpace: DB2 SQL Example - Third Party GUI Table Display</h2>
+    <div id="container"></div>
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- JavaScript Code Section                                             -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <script>
+      /*
+       * MainSpace API call.
+       * Perform an SQL query and call nominated user function when SQL query complete.
+       */
+      MFCAgentRequest.newObject( "obj1" );
+      var json_inputargs = {
+        "DB2SSID":"DBBG",
+        "callbackFunction":"callBack( obj1.response );",
+        "SQL":[ "SELECT * FROM DSN81110.EMP"
+              ]
+      }
+      obj1.runSQL( json_inputargs );
+
+      /*
+       * User callback function.
+       * Display table (third party GUI) from JSON response data.
+       */
+      function callBack( response ) {
+        // Create column headings object with extracts from response data.
+        var headings = [];
+        for ( headI = 0 ; headI < response.sqlresponse.column.length ; headI++ ) {
+          headings.push( { index: response.sqlresponse.column[headI].title,
+                           title: response.sqlresponse.column[headI].title } );
+        }
+        /*
+         * Call third party GUI library to display table with the JSON data.
+         */
+        new FancyGrid({
+          renderTo: 'container',
+          width: 'fit',
+          height: 400,
+          data: response.sqlresponse.row,
+          columns: headings
+        });
+      }
+
+    </script>
+  </body>
+</html>
