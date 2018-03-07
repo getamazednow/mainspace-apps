@@ -4,48 +4,52 @@
         For more information refer to Mainframe Cloud Resources www.mainframecloud.com and download the MainSpace Guide.
 -->
 <html>
-  <body>
-    <h2>MainSpace: DB2 SQL Example - Simple Table Display</h2>
-    <p id="sample"></p>
+    <body>
+        <h2>MainSpace: DB2 SQL Example - Simple Table Display</h2>
+        <p id="sample"></p>
 
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <!-- JavaScript Code Section                                             -->
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <script>
-      document.getElementById("sample").innerHTML = 'Please wait...';
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!-- Load MainSpace API JS LIB.                                      -->
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <script type="text/javascript" src="https://www.mainframecloudplatform.com/applibs/mainspace-platform.js"></script>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!-- JavaScript Code Section                                         -->
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <script>
+            document.getElementById("sample").innerHTML = 'Please wait...';
 
-      /*
-       * MainSpace API call.
-       * Perform an SQL query and call nominated user function when SQL query complete.
-       */
-      MFCAgentRequest.newObject( "obj1" );
-      obj1.callbackFunction = "callBack( obj1.response );";
-      obj1.setDB2SSID( "DBBG" );
-      obj1.runSQL( "SELECT * FROM DSN81110.EMP" );
+            /*
+             * MainSpace API call.
+             * Perform an SQL query and call nominated user function when SQL query complete.
+             */
+            var obj1 = MFCAgentRequest.newObject();
+            obj1.callbackFunction = "callBack( thisObject.response );";
+            obj1.setDB2SSID( "DBBG" );
+            obj1.runSQL( "SELECT * FROM DSN81110.EMP" );
 
-      /*
-       * User callback function.
-       * Display table from JSON response data.
-       */
-      function callBack( response ) {
-        var mfcTable = '<table><tr>';
-        for ( headI = 0 ; headI < response.sqlresponse.column.length ; headI++ ) {
-          mfcTable += '<th>' + response.sqlresponse.column[headI].title + '</th>';
-        }
-        mfcTable += '</tr>';
-        for ( rowI = 0; rowI < response.sqlresponse.row.length; rowI++ ) {
-          mfcTable += '<tr>';
-          for ( headI = 0; headI < response.sqlresponse.column.length; headI++ ) {
-            mfcTable += '<td>' +
-                        (response.sqlresponse.row[rowI])[response.sqlresponse.column[headI].title] +
-                        '</td>';
-          }
-          mfcTable += '</tr>';
-        }
-        mfcTable += '</table>';
-        document.getElementById("sample").innerHTML = mfcTable;
-      }
+            /*
+             * User callback function.
+             * Display table from JSON response data.
+             */
+            function callBack( response ) {
+                var mfcTable = '<table><tr>';
+                for ( headI = 0 ; headI < response.sqlresponse.column.length ; headI++ ) {
+                    mfcTable += '<th>' + response.sqlresponse.column[headI].title + '</th>';
+                }
+                mfcTable += '</tr>';
+                for ( rowI = 0; rowI < response.sqlresponse.row.length; rowI++ ) {
+                    mfcTable += '<tr>';
+                    for ( headI = 0; headI < response.sqlresponse.column.length; headI++ ) {
+                        mfcTable += '<td>' +
+                                    (response.sqlresponse.row[rowI])[response.sqlresponse.column[headI].title] +
+                                    '</td>';
+                    }
+                    mfcTable += '</tr>';
+                }
+                mfcTable += '</table>';
+                document.getElementById("sample").innerHTML = mfcTable;
+            }
 
-    </script>
-  </body>
+        </script>
+    </body>
 </html>
