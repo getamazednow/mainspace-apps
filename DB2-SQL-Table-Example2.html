@@ -53,15 +53,15 @@
              */
             function callBack( response ) {
                 var mfcTable = '<table><tr>';
-                for ( headI = 0; headI < response.sqlresponse.column.length; headI++ ) {
-                    mfcTable += '<th>' + response.sqlresponse.column[headI].title + '</th>';
+                for ( headI = 0; headI < response.sqlresp.resultset[0].column.length; headI++ ) {
+                    mfcTable += '<th>' + response.sqlresp.resultset[0].column[headI].title + '</th>';
                 }
                 mfcTable += '</tr>';
-                for ( rowI = 0; rowI < response.sqlresponse.row.length; rowI++ ) {
+                for ( rowI = 0; rowI < response.sqlresp.resultset[0].row.length; rowI++ ) {
                     mfcTable += '<tr>';
-                    for ( headI = 0; headI < response.sqlresponse.column.length; headI++ ) {
+                    for ( headI = 0; headI < response.sqlresp.resultset[0].column.length; headI++ ) {
                         mfcTable += '<td>' +
-                                    (response.sqlresponse.row[rowI])[response.sqlresponse.column[headI].title] +
+                                    (response.sqlresp.resultset[0].row[rowI])[response.sqlresp.resultset[0].column[headI].title] +
                                     '</td>';
                     }
                     mfcTable += '</tr>';
