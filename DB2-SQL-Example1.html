@@ -7,20 +7,19 @@
     <body>
         <h2>MainSpace: DB2 SQL Example - List the Contents</h2>
         <p id="sample"></p>
-
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-        <!-- Load MainSpace API JS LIB.                                      -->
+        <!-- MainSpace API JS library                                        -->
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
         <script type="text/javascript" src="https://www.mainframecloudplatform.com/applibs/mainspace-platform.js"></script>
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-        <!-- JavaScript Code Section                                         -->
+        <!-- JavaScript control code section                                 -->
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
         <script>
             document.getElementById("sample").innerHTML = 'Please wait...';
 
             /*
              * MainSpace API call.
-             * Perform an SQL query and call nominated user function when SQL query complete.
+             * Perform an SQL query and call nominated function when SQL query complete.
              */
             var obj1 = MFCAgentRequest.newObject();
             obj1.callbackFunction = "callBack( thisObject.response );";
@@ -28,7 +27,7 @@
             obj1.runSQL( "SELECT * FROM DSN81110.EMP" );
 
             /*
-             * User callback function.
+             * App callback function.
              * Display the full content of the JSON response in raw format.
              */
             function callBack( response ) {

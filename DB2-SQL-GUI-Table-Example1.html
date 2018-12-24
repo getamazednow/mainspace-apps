@@ -6,29 +6,26 @@
 <html>
     <head>
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-        <!-- IMPORT THIRD PARTY GUI CSS LIBS.                                -->
+        <!-- Third party GUI libraries                                       -->
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
         <link href="https://www.mainframecloudplatform.com/applibs/fgrid/fancy.min.css" rel="stylesheet">
+        <script type="text/javascript" src="https://www.mainframecloudplatform.com/applibs/fgrid/fancy.full.min.js">
+        </script>
     </head>
     <body>
         <h2>MainSpace: DB2 SQL Example - Third Party GUI Table Display</h2>
         <div id="container"></div>
-
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-        <!-- Load MainSpace API JS LIB.                                      -->
+        <!-- MainSpace API JS library                                        -->
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
         <script type="text/javascript" src="https://www.mainframecloudplatform.com/applibs/mainspace-platform.js"></script>
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-        <!-- IMPORT THIRD PARTY GUI LIBS.                                    -->
-        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-        <script type="text/javascript" src="https://www.mainframecloudplatform.com/applibs/fgrid/fancy.full.min.js"></script>
-        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-        <!-- JavaScript Code Section                                         -->
+        <!-- JavaScript control code section                                 -->
         <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
         <script>
             /*
              * MainSpace API call.
-             * Perform an SQL query and call nominated user function when SQL query complete.
+             * Perform an SQL query and call nominated function when SQL query complete.
              */
             var obj1 = MFCAgentRequest.newObject();
             var json_inputargs = {
@@ -36,19 +33,19 @@
                 "callbackFunction":"callBack( thisObject.response );",
                 "sql":[ "SELECT * FROM DSN81110.EMP"
                       ]
-            }
+            };
             obj1.runSQL( json_inputargs );
 
             /*
-             * User callback function.
+             * App callback function.
              * Display table (third party GUI) from JSON response data.
              */
             function callBack( response ) {
                 // Create column headings object with extracts from response data.
                 var headings = [];
-                for ( headI = 0 ; headI < response.sqlresp.resultset[0].column.length ; headI++ ) {
-                    headings.push( { index: response.sqlresp.resultset[0].column[headI].title,
-                                     title: response.sqlresp.resultset[0].column[headI].title } );
+                for ( var i = 0 ; i < response.sqlresp.resultset[0].column.length ; i++ ) {
+                    headings.push( { index: response.sqlresp.resultset[0].column[i].title,
+                                     title: response.sqlresp.resultset[0].column[i].title } );
                 }
                 /*
                  * Call third party GUI library to display table with the JSON data.
