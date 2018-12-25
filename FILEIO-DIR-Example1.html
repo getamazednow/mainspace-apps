@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!--
+        MainSpace Example App for the Mainframe Cloud InterActive Adaptor.
+        To learn how to write apps for the InterActive Adaptor refer to Mainframe Cloud User Resources http://www.mainframecloud.com/#user-resources and download the MainSpace SDK User Guide.
+        For a detailed overview of the InterActive Adaptor refer to Mainframe Cloud User Resources http://www.mainframecloud.com/#user-resources and download the InterActive Adaptor User Guide.
+-->
+<html>
+    <body>
+        <div id="container"></div>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!-- MainSpace API JS library                                        -->
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <script type="text/javascript" src="https://www.mainframecloudplatform.com/applibs/mainspace-platform.js"></script>
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <!-- JavaScript control code section                                 -->
+        <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+        <script>
+
+            // JSON input objects.
+            var jsonIn1 = {
+                "callbackFunction" : "callBack( thisObject.response );",
+                "dataset" : "ADCDA.PDS.CNTL"
+            };
+            var jsonIn2 = {
+                "callbackFunction" : "callBack( thisObject.response );",
+                "prefix" : "ADCDA"
+            };
+            var jsonIn3 = {
+                "callbackFunction" : "callBack( thisObject.response );"
+            };
+
+            // API function -- Execute API method, call nominated function when complete.
+            function memberList( dataset ) {
+                var obj1 = MFCAgentRequest.newObject();
+                obj1.callbackFunction = "callBack( thisObject.response );";
+                obj1.memberList( dataset );
+            }
+            // API function -- Execute API method, call nominated function when complete.
+            function datasetList1( prefix ) {
+                var obj1 = MFCAgentRequest.newObject();
+                obj1.callbackFunction = "callBack( thisObject.response );";
+                obj1.datasetList( prefix );
+            }
+            // API function -- Execute API method, call nominated function when complete.
+            function datasetList2() {
+                var obj1 = MFCAgentRequest.newObject();
+                obj1.callbackFunction = "callBack( thisObject.response );";
+                obj1.datasetList();
+            }
+            // API function -- Execute API method, call nominated function when complete.
+            function fileIOdir( jsonin ) {
+                var obj1 = MFCAgentRequest.newObject();
+                obj1.dir( jsonin );
+            }
+
+            // App callback function -- Display response data.
+            function callBack( response ) {
+                // Build response.
+                var dataresp = '';
+                if ( response.cmdresp != null ) {
+                    // Data.
+                    for ( var i=0 ; i < response.cmdresp.length ; i++ ) {
+                        if ( response.cmdresp[i]["TSO MESSAGE"] != null ) {
+                            dataresp += response.cmdresp[i]["TSO MESSAGE"].DATA + '<BR>';
+                        }
+                    }
+                }
+                // Display result.
+                if ( dataresp != '' ) {
+                    // Data.
+                    document.getElementById("container").innerHTML += '<br> -------------- <br>' + dataresp;
+                } else {
+                    // JSON dump.
+                    document.getElementById("container").innerHTML += '<br> -------------- <br>' + JSON.stringify( response );
+                }
+            }
+
+
+            /*
+             * Execute API example.
+             */
+            fileIOdir( jsonIn1 );
+            fileIOdir( jsonIn2 );
+            fileIOdir( jsonIn3 );
+            memberList( "ADCDA.PDS.CNTL" );
+            datasetList1( "ADCDA" );
+            datasetList2();
+
+
+        </script>
+    </body>
+</html>
