@@ -1,8 +1,20 @@
 <!DOCTYPE html>
 <!--
         MainSpace Example App for the Mainframe Cloud InterActive Adaptor.
-        To learn how to write apps for the InterActive Adaptor refer to Mainframe Cloud User Resources http://www.mainframecloud.com/#user-resources and download the MainSpace SDK User Guide.
-        For a detailed overview of the InterActive Adaptor refer to Mainframe Cloud User Resources http://www.mainframecloud.com/#user-resources and download the InterActive Adaptor User Guide.
+
+        To learn how to write apps for the InterActive Adaptor refer to
+        Mainframe Cloud User Resources http://www.mainframecloud.com/#user-resources
+        and download the MainSpace SDK User Guide.
+
+        For a detailed overview of the InterActive Adaptor refer to
+        Mainframe Cloud User Resources http://www.mainframecloud.com/#user-resources
+        and download the InterActive Adaptor User Guide.
+
+        This app executes six functions to demonstrate the different ways you can use
+        the MainSpace fileIO API to get directory information for files and folders.
+
+        *NOTE* Before you run the example app, ensure all occurrences of "ADCDA" and
+        "ADCDA.PDS.CNTL" are changed to suit your sites requirements.
 -->
 <html>
     <body>
@@ -78,14 +90,45 @@
 
             /*
              * Execute API example.
+             * Show dataset information plus the list of members if the dataset is a PDS.  Equivalent to the z/OS TSO LISTDS command.
              */
-            fileIOdir( jsonIn1 );
-            fileIOdir( jsonIn2 );
-            fileIOdir( jsonIn3 );
             memberList( "ADCDA.PDS.CNTL" );
+
+            /*
+             * Execute API example.
+             * Show list of datasets in the catalogue, filtered by the passed prefix.  Equivalent to the z/OS TSO LISTCAT LEVEL command.
+             */
             datasetList1( "ADCDA" );
+
+            /*
+             * Execute API example.
+             * Show list of datasets in the catalogue. Equivalent to the z/OS TSO LISTCAT command.
+             */
             datasetList2();
 
+            /*
+             * Execute API example.
+             * The fileIO dir method performs different functions depending on the passed JSON object.
+             * A JSON input object with dataset field performs the equivalent of the memberList method.
+             * See jsonIn1 above.
+             */
+            fileIOdir( jsonIn1 );
+
+            /*
+             * Execute API example.
+             * The fileIO dir method performs different functions depending on the passed JSON object.
+             * JSON input object with prefix field performs the equivalent of the datasetList method filtered by prefix.
+             * See jsonIn2 above.
+             */
+            fileIOdir( jsonIn2 );
+
+            /*
+             * Execute API example.
+             * The fileIO dir method performs different functions depending on the passed JSON object.
+             * JSON input object with no dataset or prefix field performs the equivalent of the datasetList method with NO filter.
+             * See jsonIn3 above.
+             */
+            fileIOdir( jsonIn3 );
 
         </script>
     </body>
